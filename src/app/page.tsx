@@ -45,6 +45,7 @@ const Footer = () => (
 // Componente principale della Home Page
 const HomePage = () => {
     return (
+        
         <UserProvider>
             <Header />
             <main>
@@ -202,6 +203,7 @@ const HomePage = () => {
             <Chatbot />
             <Footer />
         </UserProvider>
+        
     );
 };
 

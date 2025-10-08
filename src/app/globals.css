@@ -1,0 +1,51 @@
+/* globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Definiamo le variabili CSS usando i valori dal nostro tema Tailwind.
+     Questo le rende disponibili anche per CSS personalizzato, come nel tuo caso. */
+  :root {
+    --color-primary: #0D1A26;
+    --color-secondary: #1A2937;
+    --color-accent: #06B6D4;
+    --color-gradient-start: #06B6D4;
+    --color-gradient-end: #60A5FA;
+  }
+}
+
+/* Ora il tuo CSS personalizzato funzionerà perché le variabili esistono. */
+.text-gradient {
+  background-image: linear-gradient(to right, theme('colors.gradientStart'), theme('colors.gradientEnd'));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.card {
+  background-color: theme('colors.secondary');
+  border: 1px solid theme('colors.gray.700'); /* Puoi usare anche i colori di default di Tailwind */
+  transition: transform 0.3s ease;
+}
+
+.project-tag {
+  background-color: theme('colors.secondary');
+  border: 1px solid theme('colors.accent');
+  color: theme('colors.accent');
+  opacity: 0.8;
+}
+
+.chat-message-user {
+  background-color: theme('colors.accent');
+  color: theme('colors.primary');
+  border-radius: 0.75rem;
+  border-bottom-right-radius: 0;
+}
+
+.chat-message-ai {
+  background-color: theme('colors.gray.700');
+  color: white;
+  border-radius: 0.75rem;
+  border-bottom-left-radius: 0;
+}
