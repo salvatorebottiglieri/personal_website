@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, X, Loader } from 'lucide-react';
-import { API_URL, MAX_RETRIES, SYSTEM_PROMPT } from '../_data/chatbotRules';
+import { API_URL, MAX_RETRIES, SYSTEM_PROMPT_CHAT } from '../_data/chatbotRules';
 
 interface ChatPart {
     text: string;
@@ -32,6 +32,7 @@ const Chatbot = () => {
     }, [chatHistory, isOpen]);
 
     // Funzione per gestire l'API con retry
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fetchWithRetry = async (payload: any, retries = 0): Promise<any> => {
         try {
             const response = await fetch(API_URL, {
@@ -74,14 +75,14 @@ const Chatbot = () => {
         const payload = {
             contents: newHistory,
             systemInstruction: {
-                parts: [{ text: SYSTEM_PROMPT }]
+                parts: [{ text: SYSTEM_PROMPT_CHAT }]
             },
         };
 
         try {
             const result = await fetchWithRetry(payload);
             const aiResponseText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Non sono riuscito a elaborare la risposta. Prova a riformulare la domanda.";
-            
+
             // Aggiorna l'history con la risposta dell'AI
             setChatHistory(prev => [...prev, { role: "model", parts: [{ text: aiResponseText }] }]);
 
@@ -96,8 +97,8 @@ const Chatbot = () => {
     return (
         <div id="chatbot-container" className="flex flex-col items-end">
             {/* Finestra di Chat */}
-            <div 
-                id="chat-window" 
+            <div
+                id="chat-window"
                 className={`flex-col rounded-xl overflow-hidden mb-3 transition-all duration-300 ${isOpen ? 'flex' : 'hidden'}`}
                 style={{ maxWidth: '350px', width: '90vw', height: '400px', maxHeight: '80vh' }}
             >
@@ -127,7 +128,7 @@ const Chatbot = () => {
                     {isLoading && (
                         <div className="flex justify-start mb-4">
                             <div className="chat-message-ai p-3 rounded-lg text-sm italic opacity-75 flex items-center">
-                                <Loader className="w-4 h-4 mr-2 animate-spin" /> L'AI sta scrivendo...
+                                <Loader className="w-4 h-4 mr-2 animate-spin" /> L&apos;AI sta scrivendo...
                             </div>
                         </div>
                     )}
@@ -136,18 +137,18 @@ const Chatbot = () => {
                 {/* Input Messaggio */}
                 <div className="p-3 border-t border-gray-700 bg-primary">
                     <div className="flex">
-                        <input 
-                            type="text" 
-                            id="chat-input" 
-                            placeholder="Chiedi del mio stack o esperienza..." 
+                        <input
+                            type="text"
+                            id="chat-input"
+                            placeholder="Chiedi del mio stack o esperienza..."
                             value={inputMessage}
                             onChange={(e) => setInputMessage(e.target.value)}
                             onKeyDown={(e) => { if (e.key === 'Enter') sendQuery(); }}
                             disabled={isLoading}
                             className="flex-1 p-2 rounded-l-lg bg-secondary text-white border border-gray-700 focus:outline-none focus:border-accent disabled:opacity-50"
                         />
-                        <button 
-                            onClick={sendQuery} 
+                        <button
+                            onClick={sendQuery}
                             disabled={isLoading || inputMessage.trim() === ''}
                             className="bg-accent text-primary p-2 rounded-r-lg hover:bg-opacity-80 transition duration-300 disabled:opacity-50"
                         >
@@ -158,8 +159,8 @@ const Chatbot = () => {
             </div>
 
             {/* Bottone di Apertura Chatbot */}
-            <button 
-                onClick={() => setIsOpen(!isOpen)} 
+            <button
+                onClick={() => setIsOpen(!isOpen)}
                 className="w-14 h-14 bg-accent text-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition duration-300"
             >
                 {isOpen ? <X className="w-7 h-7" /> : <MessageSquare className="w-7 h-7" />}

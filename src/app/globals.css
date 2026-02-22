@@ -49,3 +49,19 @@
   border-radius: 0.75rem;
   border-bottom-left-radius: 0;
 }
+
+/* Custom Animation Utilities */
+.animate-spawn {
+    animation: spawn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes spawn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
