@@ -1,6 +1,15 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Union, Literal
 
+class VisitorInfo(BaseModel):
+    city: Optional[str] = None
+    region: Optional[str] = None
+    country: Optional[str] = None
+    org: Optional[str] = None
+    isp: Optional[str] = None
+    referrer: Optional[str] = None
+    timezone: Optional[str] = None
+
 class BaseComponent(BaseModel):
     id: Optional[str] = None
     type: str
@@ -62,6 +71,7 @@ class GeneratedPageResponse(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     history: Optional[List[dict]] = []
+    visitor: Optional[VisitorInfo] = None
 
 class ClassificationResponse(BaseModel):
     intent: Literal['chat', 'page_generation', 'off_topic']

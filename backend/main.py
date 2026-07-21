@@ -44,8 +44,7 @@ async def chat_endpoint(request: ChatRequest):
         return ChatResponse(type="page", content=page_data)
     
     else: # intent == "chat"
-        # In a real app, we would pass 'request.history' to the LLM for context
-        text_response = generator.generate_chat_response(request.message)
+        text_response = generator.generate_chat_response(request.message, visitor=request.visitor)
         return ChatResponse(type="text", content=text_response)
 
 @app.get("/health")

@@ -1,6 +1,8 @@
-from llm_service import LLMService
-from models import GeneratedPageResponse
 import json
+from typing import Optional
+
+from llm_service import LLMService
+from models import GeneratedPageResponse, VisitorInfo
 
 SYSTEM_PROMPT_CHAT = """Sei l'Assistente Personale AI di un Machine Learning Engineer esperto. 
 Rispondi alle domande in modo professionale, conciso e in italiano. 
@@ -33,8 +35,12 @@ class Generator:
     def __init__(self, llm: LLMService):
         self.llm = llm
 
-    def generate_chat_response(self, message: str) -> str:
-        return self.llm.generate_content(message, system_prompt=SYSTEM_PROMPT_CHAT)
+    def generate_chat_response(self, message: str, visitor: Optional[VisitorInfo] = None) -> str:
+        fragment = _build_prompt_fragment(visitor)
+        system_prompt = SYSTEM_PROMPT_CHAT
+        if fragment:
+            system_prompt = f"{fragment}\n\n{system_prompt}"
+        return self.llm.generate_content(message, system_prompt=system_prompt)
 
     def generate_page(self, message: str) -> GeneratedPageResponse:
         prompt = f"User Request: {message}\nGenerate the JSON for this request."
@@ -52,3 +58,25 @@ class Generator:
                      {"type": "hero", "title": "Oops!", "subtitle": "Spiacenti, si è verificato un errore durante la generazione della pagina."}
                  ]
              )
+
+def _build_prompt_fragment(visitor: Optional[VisitorInfo]) -> str:
+    if visitor is None:
+        return ""
+    parts = []
+    if visitor.city is not None:
+        parts.append(f"- Città: {visitor.city}")
+    if visitor.region is not None:
+        parts.append(f"- Regione: {visitor.region}")
+    if visitor.country is not None:
+        parts.append(f"- Paese: {visitor.country}")
+    if visitor.org is not None:
+        parts.append(f"- Organizzazione: {visitor.org}")
+    if visitor.isp is not None:
+        parts.append(f"- Provider: {visitor.isp}")
+    if visitor.referrer is not None:
+        parts.append(f"- Referrer: {visitor.referrer}")
+    if visitor.timezone is not None:
+        parts.append(f"- Fuso orario: {visitor.timezone}")
+    if not parts:
+        return ""
+    return "Informazioni disponibili sul visitatore:\n" + "\n".join(parts)
