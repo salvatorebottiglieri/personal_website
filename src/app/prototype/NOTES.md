@@ -162,3 +162,18 @@ Still to verify:
   numbers. Decide whether to add the later evaluation.
 - The CV email is `sasibottiglieri0@gmail.com`. A custom-domain email may be
   preferable before launch.
+
+---
+
+## Production v1 (2026-11-09)
+
+- English at `/`, Italian at `/it`.
+- Case studies at `/work/[slug]` and `/it/work/[slug]`, statically generated.
+- Content lives in `src/app/_data/content.en.ts` and `content.it.ts`.
+- CV is served from `public/cv/salvatore-bottiglieri-cv.pdf`.
+- `sitemap.ts` and `robots.ts` assume the domain `https://salvatorebottiglieri.com`.
+- The Ask drawer is not mounted in production until the LLM backend is configured.
+  The prototype route still contains it.
+- The old chat components under `src/app/_components` are unused but still present.
+  The old Visitor Context docs (`CONTEXT.md`, `SPEC.md`, `tickets.md`, `docs/adr`) are
+  now obsolete.

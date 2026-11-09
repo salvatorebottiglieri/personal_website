@@ -5,14 +5,39 @@
 @tailwind utilities;
 
 @layer base {
-  /* Definiamo le variabili CSS usando i valori dal nostro tema Tailwind.
-     Questo le rende disponibili anche per CSS personalizzato, come nel tuo caso. */
   :root {
-    --color-primary: #0D1A26;
-    --color-secondary: #1A2937;
-    --color-accent: #06B6D4;
-    --color-gradient-start: #06B6D4;
-    --color-gradient-end: #60A5FA;
+    --site-bg: #EEF1F0;
+    --site-surface: #F7F8F7;
+    --site-fg: #1B1F1E;
+    --site-muted: #5F6865;
+    --site-border: #C9D0CD;
+    --site-border-strong: #7C8783;
+    --site-accent: #A63D2F;
+    --site-accent-hover: #8F3226;
+    --site-accent-fg: #FFFFFF;
+    --site-success: #2F6B4F;
+    --site-warning: #7A5316;
+    --site-error: #8C1D18;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--site-bg);
+    color: var(--site-fg);
+  }
+
+  ::selection {
+    background-color: var(--site-accent);
+    color: var(--site-accent-fg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 

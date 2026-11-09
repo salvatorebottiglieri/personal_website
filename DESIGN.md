@@ -89,7 +89,7 @@
 - States: hover darkens the fill or the border; active moves 1px without changing layout; focus uses a 2px accent ring with 2px offset; disabled is 40% opacity and not clickable; loading shows a 14px spinner and keeps the label.
 - Inputs: visible label above the field, 16px text on mobile, 1px border-strong, 2px radius, inline error below the field. No placeholder-as-label.
 - Tables: text left, numbers right with font-variant-numeric: tabular-nums, 1px separators, no vertical rules, 12px header, 14-16px cells.
-- Overlays: Ask is a right-side drawer on desktop and a full-screen sheet on mobile. Focus trap, Esc to close, focus returns to the trigger, labelled input, aria-modal.
+- Overlays: Ask is a right-side drawer on desktop and a full-screen sheet on mobile. Focus trap, Esc to close, focus returns to the trigger, labelled input, aria-modal. The drawer is implemented in the prototype and is not mounted in the production v1 until the LLM backend is configured.
 - Empty / loading / error: the assistant has a "not connected" state with a direct email link; the register has a placeholder label for design review; the contact form falls back to mailto.
 - Focus ring: box-shadow 0 0 0 2px var(--bg), 0 0 0 4px var(--accent). Never outline: none without a replacement.
 
@@ -192,4 +192,5 @@
 
 ## Changelog
 
+- 2026-11-09: production v1 built with English at `/` and Italian at `/it`. The Ask drawer is deferred until the LLM backend is configured.
 - 2026-11-09: initial design system for the System Register direction, created after the anti-slop audit of variants A, B, and C.
