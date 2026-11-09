@@ -3,9 +3,11 @@
 ## Where the work is
 
 - Worktree: `../personal_website-prototype`
-- Branch: `prototype-redesign`
+- Branch: `prototype-redesign`, committed locally.
 - Main repo: untouched, still on `master` with its pre-existing uncommitted work.
-- The branch is pushed to `origin/prototype-redesign`.
+- The local `origin` points to `salvatorebottiglieri/salvatorebottiglieri`, not
+  `salvatorebottiglieri/personal_website`. Nothing was pushed. Fix the remote
+  before pushing the branch.
 
 ## Run
 
