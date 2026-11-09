@@ -19,9 +19,9 @@ interface PrototypePageProps {
 export default async function PrototypePage({ searchParams }: PrototypePageProps) {
   const params = await searchParams;
   const variant: Variant =
-    params.variant === "B" || params.variant === "C" || params.variant === "D"
+    params.variant === "A" || params.variant === "B" || params.variant === "C"
       ? params.variant
-      : "A";
+      : "D";
   const view = params.view === "case" ? "case" : "home";
   const project = projects.find((item) => item.slug === params.project) ?? projects[0];
 

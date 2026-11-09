@@ -124,6 +124,7 @@ Open:
 - `http://localhost:3000/prototype?variant=D&view=home`
 - `http://localhost:3000/prototype?variant=D&view=case&project=atlas`
 
-Status: awaiting review. If approved, distill `DESIGN.md` into a short
-`DESIGN-PRINCIPLES.md` and point future sessions at it, so the external skills
-do not need to be installed again.
+Status: D approved on 2026-11-09. `DESIGN.md` and `DESIGN-PRINCIPLES.md` are the
+source of truth. A, B, and C remain for reference only. The external skills were
+distilled into `DESIGN-PRINCIPLES.md`; they do not need to be installed again for
+this repo.
