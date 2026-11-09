@@ -12,6 +12,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ['var(--font-serif)', 'Georgia', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+      },
       // Definizione dei colori personalizzati
       colors: {
         primary: '#0D1A26',    // Sfondo Dark Navy/Black
