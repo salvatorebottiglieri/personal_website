@@ -1,21 +1,67 @@
-import './globals.css'; // Importa il CSS globale (che include Tailwind)
-import { Inter } from 'next/font/google';
-import React from 'react';
+import type { Metadata } from "next";
+import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
+import React from "react";
+import { getSiteUrl } from "./_data/siteUrl";
+import "./globals.css";
 
-// Configura il font Inter per l'ottima leggibilità
-const inter = Inter({ subsets: ['latin'] });
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-sans",
+  display: "swap",
+});
 
-export const metadata = {
-  title: 'Portfolio Dinamico ML Engineer - [Il Tuo Nome]',
-  description: 'Portfolio professionale e dinamico di un Machine Learning Engineer con focus su MLOps e sistemi scalabili.',
+const plexSerif = IBM_Plex_Serif({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-serif",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
+  title: {
+    default: "Salvatore Bottiglieri, Software AI Engineer",
+    template: "%s | Salvatore Bottiglieri",
+  },
+  description:
+    "Agent infrastructure, runtimes, orchestration, tool boundaries, and evaluation. Two years shipping agents in production.",
+  alternates: {
+    canonical: "/",
+    languages: {
+      en: "/",
+      it: "/it",
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    alternateLocale: ["it_IT"],
+    siteName: "Salvatore Bottiglieri",
+    title: "Salvatore Bottiglieri, Software AI Engineer",
+    description:
+      "Agent infrastructure, runtimes, orchestration, tool boundaries, and evaluation.",
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    // CRUCIALE: L'aggiunta di className="dark" forza l'uso dei colori scuri del tema
-    <html lang="it" className="dark"> 
-      {/* bg-primary: Sfondo principale. text-white: Testo principale chiaro. */}
-      <body className={`${inter.className} bg-primary text-white min-h-screen antialiased`}>
+    <html
+      lang="en"
+      className={`${plexSans.variable} ${plexSerif.variable} ${plexMono.variable}`}
+    >
+      <body className="bg-[#EEF1F0] font-plex-sans text-[#1B1F1E] antialiased">
         {children}
       </body>
     </html>

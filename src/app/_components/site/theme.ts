@@ -1,0 +1,25 @@
+import type { CSSProperties } from "react";
+
+export const siteTheme = {
+  "--bg": "#EEF1F0",
+  "--surface": "#F7F8F7",
+  "--fg": "#1B1F1E",
+  "--muted": "#5F6865",
+  "--border": "#C9D0CD",
+  "--border-strong": "#7C8783",
+  "--accent": "#A63D2F",
+  "--accent-hover": "#8F3226",
+  "--accent-fg": "#FFFFFF",
+  "--accent-soft": "#F3E6E3",
+  "--success": "#2F6B4F",
+  "--warning": "#7A5316",
+  "--error": "#8C1D18",
+  "--on-dark-muted": "#B9C0BD",
+  "--on-dark-faint": "#8E9793",
+  "--lab-bg": "#141817",
+  "--lab-surface": "#1C211F",
+  "--lab-fg": "#E8EBE9",
+  "--lab-muted": "#A7B0AC",
+  "--lab-border": "#2A302E",
+  "--lab-accent": "#D97766",
+} as CSSProperties;
