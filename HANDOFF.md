@@ -3,7 +3,7 @@
 ## Where the work is
 
 - Worktree: `../personal_website-prototype`
-- Branch: `prototype-redesign`, committed locally.
+- Branch: `prototype-redesign`, 11 commits, clean at `e8df7e8`.
 - Main repo: untouched, still on `master` with its pre-existing uncommitted work.
 - The local `origin` points to `salvatorebottiglieri/salvatorebottiglieri`, not
   `salvatorebottiglieri/personal_website`. Nothing was pushed. Fix the remote
