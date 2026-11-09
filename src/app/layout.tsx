@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import React from "react";
+import { getSiteUrl } from "./_data/siteUrl";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -25,7 +26,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://salvatorebottiglieri.com"),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: "Salvatore Bottiglieri, Software AI Engineer",
     template: "%s | Salvatore Bottiglieri",

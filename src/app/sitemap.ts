@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getSiteContent } from "./_data/siteContent";
+import { getSiteUrl } from "./_data/siteUrl";
 
-const baseUrl = "https://salvatorebottiglieri.com";
+const baseUrl = getSiteUrl();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const en = getSiteContent("en");

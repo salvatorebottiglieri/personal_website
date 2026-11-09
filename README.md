@@ -56,7 +56,7 @@ src/app/
 ├── globals.css
 ├── sitemap.ts
 ├── robots.ts
-└── prototype/                 # design-review prototype, not linked from the site
+└── _data/siteUrl.ts           # NEXT_PUBLIC_SITE_URL / VERCEL_URL / localhost
 public/cv/salvatore-bottiglieri-cv.pdf
 ```
 
@@ -77,18 +77,22 @@ details are anonymized. Evaluation runs are labelled in the case studies.
 
 ## AI assistant
 
-The Ask drawer exists in `src/app/prototype` and is not mounted in production.
-It will be wired after the LLM backend and deployment are chosen.
+The AI assistant is not mounted in production. It will be wired after the LLM
+backend and deployment are chosen. The old chat frontend and the design-review
+prototype have been removed.
 
 ## Legacy
 
-The old conversational portfolio code (`HeroChat`, `Chatbot`, `Bio`,
-`GeneratedPage`, the FastAPI backend under `backend/`) is still in the repo but
-is not imported by the current pages. The old Visitor Context documents
-(`CONTEXT.md`, `SPEC.md`, `tickets.md`, `docs/adr/`) describe a feature that is
-not part of the current site.
+The FastAPI backend under `backend/` is still in the repo but is not used by the
+current site. The old Visitor Context documents (`CONTEXT.md`, `SPEC.md`,
+`tickets.md`, `docs/adr/`) describe a feature that is not part of the current
+site; `docs/prototype-notes.md` records the design history.
 
 ## Deployment
 
-The static site is ready for Vercel. `sitemap.ts` and `robots.ts` assume
-`https://salvatorebottiglieri.com`; update the domain before launch.
+The static site is ready for Vercel.
+
+- Preview: `VERCEL_URL` is used automatically.
+- Local: `http://localhost:3000`.
+- Production: set `NEXT_PUBLIC_SITE_URL` to the final domain before deploying,
+  so metadata, sitemap, and robots point to the right place.
