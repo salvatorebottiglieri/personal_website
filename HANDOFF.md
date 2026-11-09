@@ -3,12 +3,12 @@
 ## Where the work is
 
 - Worktree: `../personal_website-prototype`
-- Branch: `prototype-redesign`, committed locally. The current head is the latest
-  commit on the branch; see `git log` in the worktree.
+- Branch: `prototype-redesign`, committed and pushed. The current head is the
+  latest commit on the branch; see `git log` in the worktree.
 - Main repo: untouched, still on `master` with its pre-existing uncommitted work.
-- The local `origin` points to `salvatorebottiglieri/salvatorebottiglieri`, not
-  `salvatorebottiglieri/personal_website`. Nothing was pushed. Fix the remote
-  before pushing the branch.
+- Remote: `origin` now points to
+  `https://github.com/salvatorebottiglieri/personal_website.git`.
+- Pull request: https://github.com/salvatorebottiglieri/personal_website/pull/3
 
 ## Run
 
@@ -54,7 +54,7 @@ Open:
   For production, set `NEXT_PUBLIC_SITE_URL`; previews use `VERCEL_URL`.
 - Decide whether to mount the AI assistant and which backend/provider to use.
 - Decide whether to remove the old FastAPI backend and Visitor Context docs.
-- Merge `prototype-redesign` into `master` when the content is approved.
+- Review and merge PR #3 when the content is approved.
 
 ## Design sources
 
