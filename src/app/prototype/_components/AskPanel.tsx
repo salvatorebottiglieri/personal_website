@@ -93,20 +93,52 @@ export function AskPanel({
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      text: "Ask me about Salvatore's projects, stack, or availability. This is a design prototype, so the answers are canned — no LLM is connected.",
+      text: "Ask me about Salvatore's projects, stack, or availability. This is a design prototype, so the answers are canned. No LLM is connected.",
     },
   ]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const panel = panelRef.current;
+    const input = panel?.querySelector<HTMLInputElement>("#ask-input");
+    const focusable = panel?.querySelector<HTMLElement>(
+      "button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])",
+    );
+    (input ?? focusable)?.focus();
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab" || !panel) return;
+      const nodes = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          "button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])",
+        ),
+      );
+      if (nodes.length === 0) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      previous?.focus();
+    };
   }, [open, onClose]);
 
   useEffect(() => {
@@ -149,6 +181,7 @@ export function AskPanel({
       />
 
       <div
+        ref={panelRef}
         className={`${shell} ${isTerminal ? "font-mono" : ""}`}
         style={{
           backgroundColor: theme.panel,
@@ -162,7 +195,7 @@ export function AskPanel({
         >
           <div>
             <div
-              className={`text-[10px] uppercase tracking-[0.2em] ${isTerminal ? "" : "font-mono"}`}
+              className={`text-[12px] font-medium ${isTerminal ? "" : "font-mono"}`}
               style={{ color: theme.accent }}
             >
               {mode === "drawer" ? "Ask my AI" : mode === "palette" ? "Command palette" : "$ ask --about salvatore"}
@@ -223,10 +256,10 @@ export function AskPanel({
                       <Link
                         href={projectHref(message.project)}
                         onClick={onClose}
-                        className="inline-flex items-center gap-2 border px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] transition-opacity hover:opacity-70"
+                        className="inline-flex items-center gap-2 border px-3 py-1.5 text-[11px] font-medium transition-opacity hover:opacity-70"
                         style={{ borderColor: theme.accent, color: theme.accent }}
                       >
-                        Open case study →
+                        Open case study
                       </Link>
                     </div>
                   )}
@@ -260,6 +293,13 @@ export function AskPanel({
             ))}
           </div>
 
+          <label
+            htmlFor="ask-input"
+            className={`mb-2 block text-[11px] ${isTerminal ? "" : "font-medium"}`}
+            style={{ color: theme.muted }}
+          >
+            {isTerminal ? "Command" : "Your question"}
+          </label>
           <form
             onSubmit={(event) => {
               event.preventDefault();
@@ -272,25 +312,26 @@ export function AskPanel({
               {isTerminal ? "$" : "↳"}
             </span>
             <input
+              id="ask-input"
               value={input}
               onChange={(event) => setInput(event.target.value)}
               placeholder={isTerminal ? "type a command..." : "Ask about projects, stack, availability..."}
-              className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:opacity-40"
-              style={{ color: theme.text }}
+              className="min-w-0 flex-1 bg-transparent text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 placeholder:opacity-40"
+              style={{ color: theme.text, outlineColor: theme.accent }}
               autoFocus={mode !== "terminal"}
             />
             <button
               type="submit"
               disabled={!input.trim() || typing}
-              className="border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] transition-opacity hover:opacity-70 disabled:opacity-40"
+              className="border px-2.5 py-1 text-[11px] font-medium transition-opacity hover:opacity-70 disabled:opacity-40"
               style={{ borderColor: theme.accent, color: theme.accent }}
             >
               Send
             </button>
           </form>
 
-          <p className="mt-3 text-[10px] leading-relaxed" style={{ color: theme.muted }}>
-            Prototype answer · not connected to an LLM · Esc to close
+          <p className="mt-3 text-[11px] leading-relaxed" style={{ color: theme.muted }}>
+            Prototype answer. Not connected to an LLM. Esc to close.
           </p>
         </div>
       </div>

@@ -3,13 +3,14 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-const variants = ["A", "B", "C"] as const;
+const variants = ["A", "B", "C", "D"] as const;
 type Variant = (typeof variants)[number];
 
 const names: Record<Variant, string> = {
   A: "Paper & Signal",
   B: "Index / Swiss",
   C: "Terminal Editorial",
+  D: "System Register",
 };
 
 interface PrototypeSwitcherProps {

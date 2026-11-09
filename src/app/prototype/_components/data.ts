@@ -8,6 +8,10 @@ export interface Project {
   year: string;
   role: string;
   outcome: string;
+  status: string;
+  layer: string;
+  decision: string;
+  systemPath: string[];
   stack: string[];
   summary: string;
   context: string;
@@ -16,6 +20,7 @@ export interface Project {
   approach: { title: string; body: string }[];
   built: string[];
   results: { label: string; value: string }[];
+  consequence: string;
   reflection: string;
   artwork: ArtworkKind;
 }
@@ -29,6 +34,10 @@ export const projects: Project[] = [
     year: "2025",
     role: "Lead AI Engineer",
     outcome: "−38% time to resolution",
+    status: "In production",
+    layer: "Retrieval and evaluation",
+    decision: "Ground the answer before generating it.",
+    systemPath: ["Sources", "Ingest", "Index", "Retrieve", "Answer", "Eval", "Human"],
     stack: ["Python", "FastAPI", "pgvector", "Gemini", "Next.js"],
     summary:
       "A grounded support assistant over 40k internal documents, with citations, permission-aware retrieval, and a human handoff path.",
@@ -68,6 +77,8 @@ export const projects: Project[] = [
       { label: "Grounded answers", value: "96%" },
       { label: "p95 latency", value: "2.1s" },
     ],
+    consequence:
+      "Support agents resolve routine questions inside the chat. The team now reviews knowledge gaps and stale documents instead of rewriting prompts.",
     reflection:
       "The model was the easy part. The product was permissions, citations, and the moment the assistant decides to stop talking.",
     artwork: "nodes",
@@ -80,6 +91,10 @@ export const projects: Project[] = [
     year: "2024",
     role: "ML Engineer",
     outcome: "12ms p95",
+    status: "In production",
+    layer: "Streaming inference",
+    decision: "Make features a contract between training and serving.",
+    systemPath: ["Events", "Features", "Model", "Decision", "Monitor"],
     stack: ["Kafka", "PyTorch", "Kubernetes", "GCP", "BigQuery"],
     summary:
       "A low-latency scoring service for delivery risk, with feature freshness guarantees and shadow deployments.",
@@ -119,6 +134,8 @@ export const projects: Project[] = [
       { label: "Stale features", value: "0" },
       { label: "Rollout downtime", value: "0 min" },
     ],
+    consequence:
+      "Risk decisions happen at event time, and model rollouts no longer require a maintenance window.",
     reflection:
       "Latency is a product requirement, not a benchmark. The feature store was the real architecture.",
     artwork: "bars",
@@ -131,6 +148,10 @@ export const projects: Project[] = [
     year: "2025",
     role: "Founding Engineer",
     outcome: "60% faster prototypes",
+    status: "Prototype",
+    layer: "Generative UI",
+    decision: "Constrain the model to approved components.",
+    systemPath: ["Prompt", "Schema", "Components", "Page", "Validation"],
     stack: ["Next.js", "TypeScript", "LLM tool calling", "Zod", "Vercel"],
     summary:
       "A constrained generative UI system: the model composes approved components, not arbitrary code.",
@@ -170,6 +191,8 @@ export const projects: Project[] = [
       { label: "Unsafe output", value: "0" },
       { label: "Component reuse", value: "3.2×" },
     ],
+    consequence:
+      "Product teams ship demos without an engineering sprint, and every generated page stays inside the component system.",
     reflection:
       "The interesting constraint was not what the model could generate, but what the system would allow.",
     artwork: "grid",

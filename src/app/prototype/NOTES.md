@@ -102,3 +102,28 @@ The portfolio as a register of systems, not a magazine about the author.
 ### Status
 
 TBD — needs a `DESIGN.md` and a v3 prototype.
+
+---
+
+## Variant D — System Register (v3)
+
+Built from `DESIGN.md`, after the anti-slop audit.
+
+- Home: short hero, selected-system card, register table, capability matrix,
+  experience table, about with fact card, dark Lab inset, contact block.
+- Case study: decision log with context, constraint, decision, evidence,
+  consequence, and "what I would change".
+- Type: IBM Plex Serif, Sans, and Mono. Color: cool paper, graphite, oxide red.
+- The AI panel is a functional drawer with a labelled input, focus trap, and
+  Esc-to-close. It is not a decorative terminal.
+- Render checks: no horizontal overflow at 390px and 1440px, no console errors,
+  focus trap verified.
+
+Open:
+
+- `http://localhost:3000/prototype?variant=D&view=home`
+- `http://localhost:3000/prototype?variant=D&view=case&project=atlas`
+
+Status: awaiting review. If approved, distill `DESIGN.md` into a short
+`DESIGN-PRINCIPLES.md` and point future sessions at it, so the external skills
+do not need to be installed again.

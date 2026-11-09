@@ -15,6 +15,9 @@ const config: Config = {
       fontFamily: {
         serif: ['var(--font-serif)', 'Georgia', 'serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+        'plex-sans': ['var(--font-plex-sans)', 'system-ui', 'sans-serif'],
+        'plex-serif': ['var(--font-plex-serif)', 'Georgia', 'serif'],
+        'plex-mono': ['var(--font-plex-mono)', 'ui-monospace', 'monospace'],
       },
       // Definizione dei colori personalizzati
       colors: {

@@ -4,8 +4,9 @@ import { projects } from "./_components/data";
 import VariantA from "./_components/VariantA";
 import VariantB from "./_components/VariantB";
 import VariantC from "./_components/VariantC";
+import VariantD from "./_components/VariantD";
 
-type Variant = "A" | "B" | "C";
+type Variant = "A" | "B" | "C" | "D";
 
 interface PrototypePageProps {
   searchParams: Promise<{
@@ -18,7 +19,9 @@ interface PrototypePageProps {
 export default async function PrototypePage({ searchParams }: PrototypePageProps) {
   const params = await searchParams;
   const variant: Variant =
-    params.variant === "B" || params.variant === "C" ? params.variant : "A";
+    params.variant === "B" || params.variant === "C" || params.variant === "D"
+      ? params.variant
+      : "A";
   const view = params.view === "case" ? "case" : "home";
   const project = projects.find((item) => item.slug === params.project) ?? projects[0];
 
@@ -27,6 +30,7 @@ export default async function PrototypePage({ searchParams }: PrototypePageProps
       {variant === "A" && <VariantA view={view} project={project} />}
       {variant === "B" && <VariantB view={view} project={project} />}
       {variant === "C" && <VariantC view={view} project={project} />}
+      {variant === "D" && <VariantD view={view} project={project} />}
       <PrototypeSwitcher variant={variant} view={view} project={project.slug} />
     </Suspense>
   );
