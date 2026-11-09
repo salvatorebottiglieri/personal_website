@@ -171,9 +171,13 @@ Still to verify:
 - Case studies at `/work/[slug]` and `/it/work/[slug]`, statically generated.
 - Content lives in `src/app/_data/content.en.ts` and `content.it.ts`.
 - CV is served from `public/cv/salvatore-bottiglieri-cv.pdf`.
-- `sitemap.ts` and `robots.ts` assume the domain `https://salvatorebottiglieri.com`.
+- `siteUrl.ts` uses `NEXT_PUBLIC_SITE_URL`, then `VERCEL_URL`, then localhost.
+  The final domain is still undecided.
 - The Ask drawer is not mounted in production until the LLM backend is configured.
-  The prototype route still contains it.
-- The old chat components under `src/app/_components` are unused but still present.
-  The old Visitor Context docs (`CONTEXT.md`, `SPEC.md`, `tickets.md`, `docs/adr`) are
-  now obsolete.
+- The design-review prototype and the old chat frontend have been removed.
+- The FastAPI backend under `backend/` and the old Visitor Context docs
+  (`CONTEXT.md`, `SPEC.md`, `tickets.md`, `docs/adr`) are still present but unused.
+- No deployment yet. Vercel was deferred because there is no account; the site is
+  ready for a preview or for another static host.
+- Resume in the worktree `../personal_website-prototype` on branch
+  `prototype-redesign` with `npm run dev`.
