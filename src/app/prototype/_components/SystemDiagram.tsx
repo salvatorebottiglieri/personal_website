@@ -50,7 +50,7 @@ function NodeBox({
         dominantBaseline="middle"
         fill={ink}
         fontFamily="var(--font-plex-mono), monospace"
-        fontSize={11}
+        fontSize={12}
         fontWeight={500}
       >
         {label}
@@ -64,7 +64,7 @@ function NodeBox({
           fill={ink}
           fillOpacity={0.6}
           fontFamily="var(--font-plex-mono), monospace"
-          fontSize={9}
+          fontSize={10}
         >
           {sub}
         </text>
@@ -115,7 +115,7 @@ function HArrow({
           fill={ink}
           fillOpacity={0.55}
           fontFamily="var(--font-plex-mono), monospace"
-          fontSize={9}
+          fontSize={10}
         >
           {label}
         </text>
@@ -165,7 +165,7 @@ function VArrow({
           fill={ink}
           fillOpacity={0.55}
           fontFamily="var(--font-plex-mono), monospace"
-          fontSize={9}
+          fontSize={10}
         >
           {label}
         </text>
@@ -218,7 +218,7 @@ export function SystemDiagram({
             fill={ink}
             fillOpacity={0.55}
             fontFamily="var(--font-plex-mono), monospace"
-            fontSize={9}
+            fontSize={10}
           >
             regression gate
           </text>
@@ -248,7 +248,7 @@ export function SystemDiagram({
             fill={ink}
             fillOpacity={0.55}
             fontFamily="var(--font-plex-mono), monospace"
-            fontSize={9}
+            fontSize={10}
           >
             no train/serve drift
           </text>
@@ -278,7 +278,7 @@ export function SystemDiagram({
             fill={ink}
             fillOpacity={0.55}
             fontFamily="var(--font-plex-mono), monospace"
-            fontSize={9}
+            fontSize={10}
           >
             reject invalid output
           </text>
