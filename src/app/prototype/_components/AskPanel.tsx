@@ -29,57 +29,50 @@ interface Message {
 }
 
 const suggestions = [
-  "What did he build with LLMs?",
-  "Is he available for consulting?",
-  "What's his stack?",
-  "Show me Atlas",
+  "What agents has he shipped?",
+  "What is Cortex?",
+  "What is agentic-dev-kit?",
+  "Is he available for senior roles?",
 ];
 
 function answerFor(query: string): { text: string; project?: string } {
   const q = query.toLowerCase();
 
-  if (/\b(atlas|rag|retrieval)\b/.test(q)) {
+  if (/\b(security|agents|triage|mcp|jira|production)\b/.test(q)) {
     return {
-      text: "Atlas is the clearest LLM example: a retrieval-augmented support assistant over 40k documents, with ACL-aware retrieval, citations, and a 300-case eval set. The result was −38% time to resolution.",
-      project: "atlas",
+      text: "Salvatore shipped three security agents at Infocube: triage of SAST, DAST, and SCA findings, OSS findings into idempotent Jira tickets, and proposed code fixes. The Jira and Confluence MCP servers own the domain logic; a human approves every ticket and pull request.",
+      project: "security-agents",
     };
   }
 
-  if (/\b(canvas|generative)\b/.test(q)) {
+  if (/\b(cortex|runtime|persistent|mqtt|goals)\b/.test(q)) {
     return {
-      text: "Canvas is a constrained generative UI system. The model composes approved components validated with Zod — no arbitrary HTML. Product teams cut prototype time by roughly 60%.",
-      project: "canvas",
+      text: "Cortex is his open-source agent runtime: a typed plan, act, verify loop, persistent resumable goals, an event bus with salience filtering, MQTT sensor agents, and a custom eval harness with 30 loop tasks and 13 refusal tasks. It has 20 architecture decision records.",
+      project: "cortex",
     };
   }
 
-  if (/\b(signal|latency|real-time|ml)\b/.test(q)) {
+  if (/\b(agentic-dev-kit|guardrail|gate|eval|skipped)\b/.test(q)) {
     return {
-      text: "Signal is a real-time risk scoring service: 4M events per day at a 12ms p95, with shared feature definitions and shadow deployments. It is the production-ML side of the portfolio.",
-      project: "signal",
+      text: "agentic-dev-kit is an MIT workflow for coding agents. Its pre-commit gate computes skipped tests and stale deploy pins instead of trusting the agent's report. In a pre-registered A/B replay it caught skipped tests 5/5 vs 0/5 and stale pins 5/5 vs 2/5, with 0 bypasses and 0 false alarms.",
+      project: "agentic-dev-kit",
     };
   }
 
-  if (/\b(llm|llms|language model|ai)\b/.test(q)) {
+  if (/\b(consult|consulting|available|availability|hire|role|roles)\b/.test(q)) {
     return {
-      text: "Two projects show the LLM work: Atlas is a grounded support assistant with citations and evals; Canvas is a constrained generative UI system. Atlas is the deeper case study.",
-      project: "atlas",
+      text: "Yes. Salvatore is open to senior agent infrastructure and AI engineering roles, and selected consulting. Three years fully remote. The fastest path is sasibottiglieri0@gmail.com.",
     };
   }
 
-  if (/\b(consult|consulting|available|availability|hire)\b/.test(q)) {
+  if (/\b(stack|tech|tools|language)\b/.test(q)) {
     return {
-      text: "Yes — Salvatore is open to senior AI engineering roles and selected consulting engagements. The fastest path is hello@salvatorebottiglieri.com.",
-    };
-  }
-
-  if (/\b(stack|tech|tools)\b/.test(q)) {
-    return {
-      text: "Python/FastAPI, TypeScript/Next.js, Postgres/pgvector, Kafka, PyTorch, GCP and AWS. The default is the smallest stack that can be evaluated and operated.",
+      text: "Python, Java, TypeScript, SQL, C. MCP, LangGraph, LangChain, tool calling, agent evaluation. AWS Bedrock AgentCore, ECS, Lambda; Azure, GCP, Docker, Kubernetes. PostgreSQL, Qdrant, SQLite.",
     };
   }
 
   return {
-    text: "I can answer questions about Salvatore's projects, stack, and availability. Try “What did he build with LLMs?” or “Is he available for consulting?”",
+    text: "I can answer questions about the security agents, Cortex, agentic-dev-kit, the stack, or availability.",
   };
 }
 
@@ -93,7 +86,7 @@ export function AskPanel({
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      text: "Ask me about Salvatore's projects, stack, or availability. This is a design prototype, so the answers are canned. No LLM is connected.",
+      text: "Ask me about the security agents, Cortex, agentic-dev-kit, the stack, or availability. This is a design prototype, so the answers are canned. No LLM is connected.",
     },
   ]);
   const [input, setInput] = useState("");

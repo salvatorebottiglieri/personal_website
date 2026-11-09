@@ -3,14 +3,16 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { AskPanel, type AskTheme } from "./AskPanel";
-import { SystemDiagram } from "./SystemDiagram";
+import { SystemFlow } from "./SystemFlow";
 import {
-  experience,
-  lab,
-  profile,
-  projects,
-  type Project,
-} from "./data";
+  realExperience,
+  realLab,
+  realMatrix,
+  realProfile,
+  realProjects,
+  realPublications,
+  type RealProject,
+} from "./realContent";
 
 const themeStyle = {
   "--bg": "#EEF1F0",
@@ -45,29 +47,13 @@ const askTheme: AskTheme = {
   accentText: "#FFFFFF",
 };
 
-const matrix = [
-  {
-    area: "AI applications",
-    what: "LLM applications, retrieval, agents, evaluation.",
-    artifacts: "RAG pipeline, eval harness, guardrails.",
-    tools: "Python, FastAPI, pgvector, Gemini.",
-  },
-  {
-    area: "ML systems",
-    what: "Real-time inference, feature pipelines, model rollout.",
-    artifacts: "Streaming service, feature store, monitoring.",
-    tools: "Kafka, PyTorch, Kubernetes, GCP.",
-  },
-  {
-    area: "Product engineering",
-    what: "Interfaces, APIs, data models, deployment.",
-    artifacts: "Next.js app, typed API, design system.",
-    tools: "TypeScript, Next.js, Postgres, AWS.",
-  },
-];
-
 function StatusMark({ status }: { status: string }) {
-  const color = status === "In production" ? "var(--success)" : "var(--warning)";
+  const color =
+    status === "In production"
+      ? "var(--success)"
+      : status === "Open source"
+        ? "var(--accent)"
+        : "var(--warning)";
   return (
     <span className="inline-flex items-center gap-2 text-[13px] text-[var(--muted)]">
       <span className="h-1.5 w-1.5" style={{ backgroundColor: color }} />
@@ -87,8 +73,7 @@ function SectionHeader({ title, meta }: { title: string; meta?: string }) {
   );
 }
 
-function MiniStack() {
-  const steps = ["Sources", "Retrieval", "Model", "Answer"];
+function MiniStack({ steps }: { steps: string[] }) {
   return (
     <div className="relative pl-5">
       <span className="absolute bottom-2 left-[2px] top-2 w-px bg-[var(--border)]" />
@@ -124,7 +109,7 @@ function Header({ onAsk }: { onAsk: () => void }) {
       <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-5 px-5 py-4 lg:px-10">
         <Link href="?variant=D&view=home" className="flex items-baseline gap-3">
           <span className="font-plex-serif text-xl leading-none tracking-[-0.01em]">
-            {profile.name}
+            {realProfile.name}
           </span>
           <span className="hidden font-plex-mono text-[12px] text-[var(--muted)] sm:inline">
             Software AI Engineer
@@ -156,13 +141,13 @@ function Header({ onAsk }: { onAsk: () => void }) {
             Ask
           </button>
           <a
-            href={`mailto:${profile.email}`}
+            href={`mailto:${realProfile.email}`}
             className="hidden border border-[var(--fg)] px-3 py-2 font-medium text-[var(--fg)] transition-colors hover:bg-[var(--fg)] hover:text-[var(--bg)] sm:inline-block"
           >
             Start a conversation
           </a>
           <a
-            href={`mailto:${profile.email}`}
+            href={`mailto:${realProfile.email}`}
             className="underline decoration-[var(--border-strong)] underline-offset-4 sm:hidden"
           >
             Contact
@@ -174,19 +159,20 @@ function Header({ onAsk }: { onAsk: () => void }) {
 }
 
 function Hero({ onAsk }: { onAsk: () => void }) {
+  const selected = realProjects[0];
+
   return (
     <section className="border-b border-[var(--border)]">
       <div className="mx-auto grid max-w-[1280px] gap-12 px-5 py-16 lg:grid-cols-12 lg:px-10 lg:py-24">
         <div className="lg:col-span-7">
           <p className="font-plex-mono text-[12px] text-[var(--muted)]">
-            Software AI Engineer. Italy / Remote.
+            {realProfile.role}. {realProfile.location}.
           </p>
           <h1 className="mt-5 max-w-3xl font-plex-serif text-[clamp(2.9rem,6vw,4.3rem)] leading-[1.02] tracking-[-0.02em]">
-            AI systems, shipped.
+            {realProfile.headline}
           </h1>
           <p className="mt-6 max-w-xl text-[1.25rem] leading-[1.55] text-[var(--muted)]">
-            I design and engineer AI-native products: LLM applications, retrieval
-            systems, and the infrastructure that keeps them reliable.
+            {realProfile.intro}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
@@ -195,12 +181,13 @@ function Hero({ onAsk }: { onAsk: () => void }) {
             >
               See selected systems
             </Link>
-            <span
-              className="border border-[var(--border-strong)] px-4 py-2.5 text-sm font-medium"
-              title="Prototype link"
+            <a
+              href={realProfile.cv}
+              download
+              className="border border-[var(--border-strong)] px-4 py-2.5 text-sm font-medium transition-colors hover:border-[var(--fg)]"
             >
               Download CV
-            </span>
+            </a>
             <button
               type="button"
               onClick={onAsk}
@@ -210,9 +197,7 @@ function Hero({ onAsk }: { onAsk: () => void }) {
             </button>
           </div>
           <p className="mt-8 max-w-md text-sm leading-relaxed text-[var(--muted)]">
-            Open to senior AI engineering roles and selected consulting. I work with
-            teams that need to move from prototype to production without losing the
-            plot.
+            {realProfile.availability}
           </p>
         </div>
 
@@ -223,33 +208,30 @@ function Hero({ onAsk }: { onAsk: () => void }) {
                 <p className="font-plex-mono text-[12px] text-[var(--muted)]">
                   Selected system
                 </p>
-                <p className="mt-1 font-plex-serif text-2xl">Atlas</p>
+                <p className="mt-1 font-plex-serif text-2xl">{selected.title}</p>
               </div>
-              <StatusMark status="In production" />
+              <StatusMark status={selected.status} />
             </div>
             <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-              A grounded support assistant over 40k internal documents, with citations
-              and a human handoff.
+              {selected.summary}
             </p>
             <div className="mt-5 border-t border-[var(--border)] pt-4">
-              <MiniStack />
+              <MiniStack steps={selected.flow.steps.map((step) => step.label).slice(0, 4)} />
             </div>
             <div className="mt-5 grid grid-cols-3 gap-3 border-t border-[var(--border)] pt-4">
-              {[
-                ["−38%", "time to resolution"],
-                ["96%", "grounded answers"],
-                ["2.1s", "p95 latency"],
-              ].map(([value, label]) => (
-                <div key={label}>
-                  <div className="font-plex-mono text-lg tabular-nums">{value}</div>
+              {selected.heroMetrics.map((metric) => (
+                <div key={metric.label}>
+                  <div className="font-plex-mono text-lg tabular-nums">
+                    {metric.value}
+                  </div>
                   <div className="mt-1 text-[12px] leading-snug text-[var(--muted)]">
-                    {label}
+                    {metric.label}
                   </div>
                 </div>
               ))}
             </div>
             <Link
-              href="?variant=D&view=case&project=atlas"
+              href={`?variant=D&view=case&project=${selected.slug}`}
               className="mt-5 inline-block text-sm font-medium underline decoration-[var(--border-strong)] underline-offset-4 hover:text-[var(--accent)]"
             >
               Read the decision log
@@ -265,7 +247,7 @@ function Register() {
   return (
     <section id="systems" className="border-b border-[var(--border)]">
       <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-10">
-        <SectionHeader title="Selected systems" meta="3 systems, 2024–2025" />
+        <SectionHeader title="Selected systems" meta="3 systems, 2026" />
 
         <div className="mt-8 border-t border-[var(--border-strong)]">
           <div className="hidden grid-cols-[minmax(0,2.2fr)_minmax(0,1.2fr)_minmax(0,0.8fr)_minmax(0,1fr)_5rem] gap-4 border-b border-[var(--border)] py-2 font-plex-mono text-[12px] text-[var(--muted)] md:grid">
@@ -276,7 +258,7 @@ function Register() {
             <span className="text-right">Year</span>
           </div>
 
-          {projects.map((project) => (
+          {realProjects.map((project) => (
             <Link
               key={project.slug}
               href={`?variant=D&view=case&project=${project.slug}`}
@@ -321,8 +303,8 @@ function Register() {
         </div>
 
         <p className="mt-3 text-[12px] text-[var(--muted)]">
-          Placeholder projects for design review. The real register will use verified
-          metrics only.
+          Metrics come from production or public evaluations. Evaluation runs are
+          labelled in the decision log.
         </p>
       </div>
     </section>
@@ -333,11 +315,11 @@ function WhatIDo() {
   return (
     <section className="border-b border-[var(--border)]">
       <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-10">
-        <SectionHeader title="What I do" meta="From interface to infrastructure" />
+        <SectionHeader title="What I do" meta="From runtime to evaluation" />
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1.5fr]">
           <p className="max-w-md font-plex-serif text-3xl leading-[1.2]">
-            I build the parts that make AI useful in production.
+            I build the systems that make agents useful in production.
           </p>
 
           <div className="border-t border-[var(--border-strong)]">
@@ -346,7 +328,7 @@ function WhatIDo() {
               <span>What I build</span>
               <span>Typical tools</span>
             </div>
-            {matrix.map((row) => (
+            {realMatrix.map((row) => (
               <div
                 key={row.area}
                 className="grid gap-2 border-b border-[var(--border)] py-4 md:grid-cols-[1fr_1.3fr_1.1fr] md:gap-4"
@@ -376,9 +358,9 @@ function Experience() {
   return (
     <section id="experience" className="border-b border-[var(--border)]">
       <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-10">
-        <SectionHeader title="Experience" meta="CV available on request" />
+        <SectionHeader title="Experience" meta="CV available" />
         <div className="mt-8 border-t border-[var(--border-strong)]">
-          {experience.map((item) => (
+          {realExperience.map((item) => (
             <div
               key={item.period}
               className="grid gap-2 border-b border-[var(--border)] py-4 md:grid-cols-[9rem_1fr_1.3fr] md:gap-6"
@@ -396,6 +378,45 @@ function Experience() {
             </div>
           ))}
         </div>
+
+        <div className="mt-6 border-t border-[var(--border)] pt-4">
+          <p className="font-plex-mono text-[12px] text-[var(--muted)]">Education</p>
+          <p className="mt-1 text-sm">
+            {realProfile.education.degree},{" "}
+            {realProfile.education.school}, {realProfile.education.year}.
+          </p>
+          <p className="mt-1 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+            {realProfile.education.focus}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Publications() {
+  return (
+    <section className="border-b border-[var(--border)]">
+      <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-10">
+        <SectionHeader title="Publications" meta="Peer-reviewed" />
+        <div className="mt-8 border-t border-[var(--border-strong)]">
+          {realPublications.map((publication) => (
+            <div
+              key={publication.title}
+              className="grid gap-2 border-b border-[var(--border)] py-4 md:grid-cols-[8rem_1fr] md:gap-6"
+            >
+              <span className="font-plex-mono text-[12px] text-[var(--muted)]">
+                {publication.year}
+              </span>
+              <div>
+                <p className="font-medium">{publication.title}</p>
+                <p className="mt-1 text-sm text-[var(--muted)]">
+                  {publication.venue}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -406,24 +427,22 @@ function About() {
     <section id="about" className="border-b border-[var(--border)]">
       <div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-16 lg:grid-cols-[1.2fr_1fr] lg:px-10">
         <div>
-          <SectionHeader title="About" meta={profile.location} />
+          <SectionHeader
+            title="About"
+            meta={`${realProfile.location}. ${realProfile.remote}.`}
+          />
           <p className="mt-6 max-w-xl text-lg leading-relaxed">
-            {profile.about[0]}
+            {realProfile.about[0]}
           </p>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-            {profile.about[1]}
+            {realProfile.about[1]}
           </p>
         </div>
 
         <div>
           <div className="border border-[var(--border)] bg-[var(--surface)] p-5">
             <dl className="divide-y divide-[var(--border)] text-sm">
-              {[
-                ["Based", profile.location],
-                ["Focus", "AI applications, ML systems, product engineering"],
-                ["Availability", "Senior roles and selected consulting"],
-                ["Languages", "English, Italian"],
-              ].map(([label, value]) => (
+              {realProfile.facts.map(([label, value]) => (
                 <div key={label} className="grid grid-cols-[6.5rem_1fr] gap-3 py-2.5">
                   <dt className="text-[var(--muted)]">{label}</dt>
                   <dd>{value}</dd>
@@ -433,7 +452,7 @@ function About() {
           </div>
 
           <ul className="mt-6 space-y-4">
-            {profile.principles.map((principle) => (
+            {realProfile.principles.map((principle) => (
               <li key={principle.title} className="border-t border-[var(--border)] pt-3">
                 <h3 className="font-medium">{principle.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
@@ -469,7 +488,7 @@ function Lab({ onAsk }: { onAsk: () => void }) {
           </div>
 
           <div className="mt-6">
-            {lab.map((item) => (
+            {realLab.map((item) => (
               <div
                 key={item.title}
                 className="grid gap-2 border-b border-[var(--lab-border)] py-4 last:border-b-0 md:grid-cols-[10rem_1fr] md:gap-6"
@@ -488,8 +507,8 @@ function Lab({ onAsk }: { onAsk: () => void }) {
           </div>
 
           <p className="mt-6 text-[12px] leading-relaxed text-[var(--lab-muted)]">
-            The assistant answers from a curated knowledge base. It is a prototype, not
-            a general-purpose chatbot.
+            The assistant answers from a curated knowledge base. It is a prototype,
+            not a general-purpose chatbot.
           </p>
         </div>
       </div>
@@ -505,21 +524,21 @@ function Contact() {
           Contact
         </p>
         <h2 className="mt-4 max-w-2xl font-plex-serif text-[clamp(2.2rem,4vw,3.2rem)] leading-[1.1]">
-          Have a system that needs to ship?
+          Have an agent that needs to ship?
         </h2>
         <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--on-dark-muted)]">
-          Tell me what you are building, what is stuck, and what done looks like. I will
-          reply with a concrete next step.
+          Tell me what is stuck: the runtime, the tools, the evaluation, or the
+          handoff. I will reply with a concrete next step.
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-5">
           <a
-            href={`mailto:${profile.email}`}
+            href={`mailto:${realProfile.email}`}
             className="border border-[var(--bg)] bg-[var(--bg)] px-4 py-2.5 text-sm font-medium text-[var(--fg)] transition-colors hover:bg-[var(--on-dark-muted)]"
           >
             Email me
           </a>
           <a
-            href={profile.linkedin}
+            href={realProfile.linkedin}
             target="_blank"
             rel="noreferrer"
             className="text-sm underline decoration-[var(--on-dark-faint)] underline-offset-4 hover:decoration-[var(--bg)]"
@@ -527,17 +546,23 @@ function Contact() {
             LinkedIn
           </a>
           <a
-            href={profile.github}
+            href={realProfile.github}
             target="_blank"
             rel="noreferrer"
             className="text-sm underline decoration-[var(--on-dark-faint)] underline-offset-4 hover:decoration-[var(--bg)]"
           >
             GitHub
           </a>
-          <span className="text-sm text-[var(--on-dark-faint)]">CV on request</span>
+          <a
+            href={realProfile.cv}
+            download
+            className="text-sm text-[var(--on-dark-faint)] underline decoration-[var(--on-dark-faint)] underline-offset-4 hover:decoration-[var(--bg)]"
+          >
+            CV
+          </a>
         </div>
         <p className="mt-8 font-plex-mono text-[12px] text-[var(--on-dark-faint)]">
-          {profile.email}
+          {realProfile.email}
         </p>
       </div>
     </section>
@@ -548,8 +573,8 @@ function Footer() {
   return (
     <footer className="px-5 py-6 lg:px-10">
       <div className="mx-auto flex max-w-[1280px] flex-col gap-2 text-[12px] text-[var(--muted)] md:flex-row md:items-center md:justify-between">
-        <span>© 2026 {profile.name}</span>
-        <span>Prototype. Placeholder copy and metrics.</span>
+        <span>© 2026 {realProfile.name}</span>
+        <span>Prototype. Content from CV, public repositories, and approved work notes.</span>
         <span>English / Italiano</span>
       </div>
     </footer>
@@ -573,10 +598,9 @@ function CaseSection({
   );
 }
 
-function CaseStudy({ project, onAsk }: { project: Project; onAsk: () => void }) {
-  const currentIndex = projects.findIndex((item) => item.slug === project.slug);
-  const next = projects[(currentIndex + 1) % projects.length];
-  const diagramKind = project.slug as "atlas" | "signal" | "canvas";
+function CaseStudy({ project, onAsk }: { project: RealProject; onAsk: () => void }) {
+  const currentIndex = realProjects.findIndex((item) => item.slug === project.slug);
+  const next = realProjects[(currentIndex + 1) % realProjects.length];
 
   return (
     <main>
@@ -620,26 +644,13 @@ function CaseStudy({ project, onAsk }: { project: Project; onAsk: () => void }) 
         </div>
 
         <div className="mt-8 border border-[var(--border)] bg-[var(--surface)] p-4 md:p-6">
-          <div className="lg:hidden">
-            <ol className="space-y-2">
-              {project.systemPath.map((step, index) => (
-                <li key={step} className="flex items-center gap-3">
-                  <span className="w-5 font-plex-mono text-[12px] tabular-nums text-[var(--muted)]">
-                    {index + 1}
-                  </span>
-                  <span className="flex-1 border border-[var(--border)] px-2.5 py-1.5 text-sm">
-                    {step}
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div className="hidden lg:block">
-            <SystemDiagram kind={diagramKind} className="h-auto w-full" />
-          </div>
+          <SystemFlow
+            steps={project.flow.steps}
+            branches={project.flow.branches}
+            accentIndex={project.flow.accentIndex}
+          />
           <p className="mt-3 font-plex-mono text-[12px] text-[var(--muted)]">
-            Figure 1. {project.title} system path. Placeholder schematic for design
-            review.
+            Figure 1. {project.title} system path. Simplified for clarity.
           </p>
         </div>
       </div>
@@ -657,6 +668,7 @@ function CaseStudy({ project, onAsk }: { project: Project; onAsk: () => void }) 
               ["evidence", "Evidence"],
               ["consequence", "Consequence"],
               ["change", "What I would change"],
+              ["reflection", "Reflection"],
             ].map(([id, label]) => (
               <a
                 key={id}
@@ -681,6 +693,27 @@ function CaseStudy({ project, onAsk }: { project: Project; onAsk: () => void }) 
               ))}
             </div>
           </div>
+
+          {project.links && project.links.length > 0 && (
+            <div className="mt-6 border-t border-[var(--border)] pt-4">
+              <p className="font-plex-mono text-[12px] text-[var(--muted)]">
+                Links
+              </p>
+              <div className="mt-2 space-y-2">
+                {project.links.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-sm underline decoration-[var(--border-strong)] underline-offset-4 hover:text-[var(--accent)]"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
 
           <button
             type="button"
@@ -756,14 +789,21 @@ function CaseStudy({ project, onAsk }: { project: Project; onAsk: () => void }) 
                   className="flex items-baseline justify-between gap-4 border-b border-[var(--border)] py-2.5"
                 >
                   <span className="text-sm text-[var(--muted)]">{result.label}</span>
-                  <span className="font-plex-mono text-lg tabular-nums text-[var(--accent)]">
-                    {result.value}
-                  </span>
+                  <div className="text-right">
+                    <div className="font-plex-mono text-lg tabular-nums text-[var(--accent)]">
+                      {result.value}
+                    </div>
+                    {result.note && (
+                      <div className="mt-0.5 text-[12px] leading-snug text-[var(--muted)]">
+                        {result.note}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
             <p className="mt-2 text-[12px] text-[var(--muted)]">
-              Placeholder metrics for design review.
+              Evaluation runs are labelled in the note.
             </p>
           </CaseSection>
 
@@ -774,6 +814,12 @@ function CaseStudy({ project, onAsk }: { project: Project; onAsk: () => void }) 
           </CaseSection>
 
           <CaseSection id="change" title="What I would change">
+            <p className="text-base leading-relaxed text-[var(--muted)]">
+              {project.change}
+            </p>
+          </CaseSection>
+
+          <CaseSection id="reflection" title="Reflection">
             <p className="font-plex-serif text-xl leading-[1.4] text-[var(--fg)]">
               {project.reflection}
             </p>
@@ -805,7 +851,7 @@ function CaseStudy({ project, onAsk }: { project: Project; onAsk: () => void }) 
 
 interface VariantDProps {
   view: "home" | "case";
-  project: Project;
+  project: RealProject;
 }
 
 export default function VariantD({ view, project }: VariantDProps) {
@@ -824,6 +870,7 @@ export default function VariantD({ view, project }: VariantDProps) {
           <Register />
           <WhatIDo />
           <Experience />
+          <Publications />
           <About />
           <Lab onAsk={() => setAskOpen(true)} />
           <Contact />

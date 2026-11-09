@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { PrototypeSwitcher } from "./_components/PrototypeSwitcher";
 import { projects } from "./_components/data";
+import { realProjects } from "./_components/realContent";
 import VariantA from "./_components/VariantA";
 import VariantB from "./_components/VariantB";
 import VariantC from "./_components/VariantC";
@@ -24,14 +25,20 @@ export default async function PrototypePage({ searchParams }: PrototypePageProps
       : "D";
   const view = params.view === "case" ? "case" : "home";
   const project = projects.find((item) => item.slug === params.project) ?? projects[0];
+  const realProject =
+    realProjects.find((item) => item.slug === params.project) ?? realProjects[0];
 
   return (
     <Suspense fallback={null}>
       {variant === "A" && <VariantA view={view} project={project} />}
       {variant === "B" && <VariantB view={view} project={project} />}
       {variant === "C" && <VariantC view={view} project={project} />}
-      {variant === "D" && <VariantD view={view} project={project} />}
-      <PrototypeSwitcher variant={variant} view={view} project={project.slug} />
+      {variant === "D" && <VariantD view={view} project={realProject} />}
+      <PrototypeSwitcher
+        variant={variant}
+        view={view}
+        project={variant === "D" ? realProject.slug : project.slug}
+      />
     </Suspense>
   );
 }

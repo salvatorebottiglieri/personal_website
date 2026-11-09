@@ -16,7 +16,7 @@
 - Single-minded proposition: this person ships AI systems and can explain the decisions behind them.
 - References: admire Stripe Docs for technical clarity, Linear for restrained product-as-hero density, Pentagram for typographic confidence. Avoid the cream-and-serif AI portfolio and the near-black-and-acid-green terminal portfolio.
 - Mode: light primary, with a dark inset surface for the Lab. Density: balanced.
-- Constraints: Next.js App Router, Tailwind, bilingual EN/IT with English at the root, no backend decision yet, placeholder project data until the real case studies exist.
+- Constraints: Next.js App Router, Tailwind, bilingual EN/IT with English at the root, no backend decision yet. Content is sourced from the CV (November 2026), public GitHub repositories (`botti-agent`, `agentic-dev-kit`, `memex`, `atlassian-cli`), and approved work notes for the security agents and the stateless MCP server. Client details are anonymized.
 
 ## Aesthetic
 
@@ -188,7 +188,7 @@
 ## Slop audit
 
 - Date: 2026-11-09 | Result: pass for design and render.
-- Notes: A and C matched the two current AI-design clusters (cream + serif + warm accent; near-black + acid green). D removes cream, Instrument Serif, JetBrains Mono, acid green, numbered eyebrows, ALL-CAPS labels, middle-dot metadata, arrows appended to links, 9px microcopy, fake caret, side-stripe borders, and three equal card grids. Render checks at 390px and 1440px: no horizontal overflow, no console errors, assistant input labelled and focused, focus trap holds, Esc closes and returns focus. Contrast measured for the defined roles: accent on bg 5.55:1, accent-fg on accent 6.31:1, muted on bg 5.06:1, warning on bg 6.01:1, on-dark-muted 8.99:1, on-dark-faint 5.55:1. Placeholder copy and metrics remain to be replaced with verified content.
+- Notes: A and C matched the two current AI-design clusters (cream + serif + warm accent; near-black + acid green). D removes cream, Instrument Serif, JetBrains Mono, acid green, numbered eyebrows, ALL-CAPS labels, middle-dot metadata, arrows appended to links, 9px microcopy, fake caret, side-stripe borders, and three equal card grids. Render checks at 390px and 1440px: no horizontal overflow, no console errors, assistant input labelled and focused, focus trap holds, Esc closes and returns focus. Contrast measured for the defined roles: accent on bg 5.55:1, accent-fg on accent 6.31:1, muted on bg 5.06:1, warning on bg 6.01:1, on-dark-muted 8.99:1, on-dark-faint 5.55:1. Content is sourced from the CV, public GitHub repositories, and approved work notes. Client details are anonymized, and evaluation runs are labelled as such.
 
 ## Changelog
 

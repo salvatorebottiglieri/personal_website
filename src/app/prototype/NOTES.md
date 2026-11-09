@@ -101,7 +101,7 @@ The portfolio as a register of systems, not a magazine about the author.
 
 ### Status
 
-TBD — needs a `DESIGN.md` and a v3 prototype.
+Superseded by Variant D.
 
 ---
 
@@ -122,9 +122,43 @@ Built from `DESIGN.md`, after the anti-slop audit.
 Open:
 
 - `http://localhost:3000/prototype?variant=D&view=home`
-- `http://localhost:3000/prototype?variant=D&view=case&project=atlas`
+- `http://localhost:3000/prototype?variant=D&view=case&project=security-agents`
 
 Status: D approved on 2026-11-09. `DESIGN.md` and `DESIGN-PRINCIPLES.md` are the
 source of truth. A, B, and C remain for reference only. The external skills were
 distilled into `DESIGN-PRINCIPLES.md`; they do not need to be installed again for
 this repo.
+
+---
+
+## Content pass — real sources (2026-11-09)
+
+Sources:
+
+- CV: `/mnt/c/Users/s.bottiglieri/Downloads/CV.pdf`, copied to
+  `public/cv/salvatore-bottiglieri-cv.pdf`.
+- Public GitHub: `botti-agent` (Cortex), `agentic-dev-kit`, `memex`,
+  `atlassian-cli`.
+- Work notes: `Desktop/DEMO-AGENTS-2026-10-07`,
+  `Desktop/agent3-orchestrators-design`, `Downloads/SPEC-DSF-14816-stateless-mcp-v2.md`.
+- Client details are anonymized: "a global enterprise video platform", no internal
+  URLs, ticket keys, CVE IDs, or customer names.
+
+Three systems:
+
+1. **Security agents** — three production agents, Jira and Confluence MCP servers,
+   AWS Bedrock AgentCore and ECS. The triage numbers are a labelled dry-run, not
+   production.
+2. **Cortex** — open-source agent runtime, 20 ADRs, 30 loop eval tasks and 13
+   refusal tasks.
+3. **agentic-dev-kit** — MIT guardrails, pre-commit gate, 5/5 vs 0/5 on skipped
+   tests and 5/5 vs 2/5 on stale pins.
+
+Still to verify:
+
+- The CV says 18 ADRs for Cortex; the public repository has 20. The site uses 20.
+- The CV reports a later 10-run evaluation (10/10 vs 2/10 defects, +14–26% cost);
+  the public changelog reports the 5/5 and 5/5 numbers. The site uses the public
+  numbers. Decide whether to add the later evaluation.
+- The CV email is `sasibottiglieri0@gmail.com`. A custom-domain email may be
+  preferable before launch.
